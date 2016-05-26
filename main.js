@@ -2,7 +2,7 @@ var app = require('app'); // Module to control application life.
 var BrowserWindow = require('browser-window'); // Module to create native browser window.
 var nconf = require('nconf');
 var path = require('path');
-var ipc = require('ipc');
+var ipc = require('electron').ipcMain;
 var mpd = require('mpd');
 var cmd = mpd.cmd;
 
@@ -28,11 +28,11 @@ app.on('ready', function () {
     height: height,
     resizable: false,
     fullscreen: false,
-    'auto-hide-menu-bar': true,
+    autoHideMenuBar: true,
   });
 
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/player/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/player/index.html');
 
   // Open the devtools.
   //mainWindow.openDevTools();

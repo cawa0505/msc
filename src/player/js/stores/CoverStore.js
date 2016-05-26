@@ -10,53 +10,54 @@ var CHANGE_EVENT = 'change';
 var cover = 'none';
 
 function fetchCoverArt(artist, album, fn) {
-	if (artist === undefined || album === undefined) {
-		fn('error');
-		return;
-	}
+  if (artist === undefined || album === undefined) {
+    fn('error');
+    return;
+  }
 
-	covers.search({
-		artist: artist,
-		album:  album,
-		size:   'extralarge'
-	}, fn);
+  covers.search({
+    artist: artist,
+    album:  album,
+    size:   'extralarge',
+  }, fn);
 }
 
 var CoverStore = assign({}, EventEmitter.prototype, {
 
-	getCover: function() {
-		return cover;
-	},
+  getCover: function () {
+    return cover;
+  },
 
-	emitChange: function() {
-		this.emit(CHANGE_EVENT);
-	},
+  emitChange: function () {
+    this.emit(CHANGE_EVENT);
+  },
 
-	addChangeListener: function(callback) {
-		this.on(CHANGE_EVENT, callback);
-	},
+  addChangeListener: function (callback) {
+    this.on(CHANGE_EVENT, callback);
+  },
 
-	removeChangeListener: function(callback) {
-		this.removeListener(CHANGE_EVENT, callback);
-	},
+  removeChangeListener: function (callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  },
 
-	dispatcherIndex: AppDispatcher.register(function(payload) {
-		switch(payload.actionType) {
-			case Constants.COVER_UPDATE:
-				var mpdStatus = MpdStore.getStatus();
-				fetchCoverArt(mpdStatus.Artist, mpdStatus.Album,
-					function(err, res) {
-						if (!err) {
-							cover = (res !== 'No image was found' ? res : 'none');
-						} else {
-							cover = 'none';
-						}
-						CoverStore.emitChange();
-					}
-				);
-				break;
-		}
-	})
+  dispatcherIndex: AppDispatcher.register(function (payload) {
+    switch (payload.actionType) {
+    case Constants.COVER_UPDATE:
+      var mpdStatus = MpdStore.getStatus();
+      fetchCoverArt(mpdStatus.Artist, mpdStatus.Album,
+       function (err, res) {
+        if (!err) {
+          cover = (res !== 'No image was found' ? res : 'none');
+        } else {
+          cover = 'none';
+        }
+
+        CoverStore.emitChange();
+      }
+      );
+    break;
+  }
+  }),
 });
 
 module.exports = CoverStore;

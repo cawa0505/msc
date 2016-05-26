@@ -9,57 +9,57 @@ var ipc           = require('ipc');
 var CHANGE_EVENT = 'change';
 
 var status = {
-	Volume:  100,
-	State:   'stop',
-	Artist:  '',
-	Album:   '',
-	Title:   '',
-	Elapsed: '',
-	Duration:'',
-	Random:  0,
-	Repeat:  0
+  Volume:  100,
+  State:   'stop',
+  Artist:  '',
+  Album:   '',
+  Title:   '',
+  Elapsed: '',
+  Duration: '',
+  Random:  0,
+  Repeat:  0,
 };
 
-ipc.on('connection-success', function() {
-	// TODO: turn off spinner
+ipc.on('connection-success', function () {
+  // TODO: turn off spinner
 });
 
-ipc.on('connection-fail', function() {
-	// TODO: turn on spinner
+ipc.on('connection-fail', function () {
+  // TODO: turn on spinner
 });
 
-ipc.on('status-update', function(data) {
-	var oldAlbum = status.Album;
-	status = data;
-	MpdStore.emitChange();
+ipc.on('status-update', function (data) {
+  var oldAlbum = status.Album;
+  status = data;
+  MpdStore.emitChange();
 
-	if (status.Album !== oldAlbum) MscActions.updateCover();
+  if (status.Album !== oldAlbum) MscActions.updateCover();
 });
 
 var MpdStore = assign({}, EventEmitter.prototype, {
 
-	connect: function() {
-		ipc.send('connect');
-	},
+  connect: function () {
+   ipc.send('connect');
+  },
 
-	getStatus: function() {
-		return status;
-	},
+  getStatus: function () {
+   return status;
+  },
 
-	emitChange: function() {
-		this.emit(CHANGE_EVENT);
-	},
+  emitChange: function () {
+   this.emit(CHANGE_EVENT);
+  },
 
-	addChangeListener: function(callback) {
+	addChangeListener: function (callback) {
 		this.on(CHANGE_EVENT, callback);
 	},
 
-	removeChangeListener: function(callback) {
+	removeChangeListener: function (callback) {
 		this.removeListener(CHANGE_EVENT, callback);
 	},
 
-	dispatcherIndex: AppDispatcher.register(function(payload) {
-		switch(payload.actionType) {
+	dispatcherIndex: AppDispatcher.register(function (payload) {
+		switch (payload.actionType) {
 			case Constants.MPD_CONNECT:
 				ipc.send('connect');
 				break;

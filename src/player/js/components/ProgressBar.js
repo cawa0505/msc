@@ -16,7 +16,7 @@ var ProgressBar = React.createClass({
 
     return (
       <div className="progress-bar" onClick={this._onClick}>
-				<div className="progress" style={{ width: width }} />
+  			<div className="progress" style={{ width: width }} />
 			</div>
     );
   },
