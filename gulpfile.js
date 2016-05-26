@@ -15,7 +15,7 @@ gulp.task('package', ['compile', 'install'], function() {
 				packageJson: require('./dest/package.json'),
 				release: './release',
 				cache:   './cache',
-				version: 'v0.27.2',
+				version: 'v0.37.8',
 				packaging: true,
 				platforms: ['darwin-x64', 'linux-x64']
 			}))

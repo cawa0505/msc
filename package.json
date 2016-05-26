@@ -12,7 +12,7 @@
   "author": "Arnar Gauti Ingason <granra@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron-prebuilt": "^0.27.2",
+    "electron-prebuilt": "^0.37.8",
     "gulp": "^3.9.0",
     "gulp-electron": "0.0.5",
     "gulp-install": "^0.4.0",
