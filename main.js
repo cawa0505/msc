@@ -2,6 +2,7 @@ var app = require('app'); // Module to control application life.
 var BrowserWindow = require('browser-window'); // Module to create native browser window.
 var nconf = require('nconf');
 var path = require('path');
+// var ipc = require('ipc');
 var ipc = require('electron').ipcMain;
 var mpd = require('mpd');
 var cmd = mpd.cmd;
@@ -70,7 +71,6 @@ ipc.on('get-settings', function (event, arg) {
     port: nconf.get('port') || 6600,
   };
 });
-
 
 // Mpd
 var client;
@@ -161,7 +161,11 @@ ipc.on('next-song', function () {
 });
 
 ipc.on('seek', function (event, arg) {
-  client.sendCommand(cmd('seekcur ' + arg, []));
+  client.sendCommand(['status'], function (err, res) {
+    var resObj = parseMsg(res);
+    var songId = resObj.songid;
+    client.sendCommand(cmd('seek ', [1, parseInt(arg)]));
+  });
 });
 
 ipc.on('random', function (event, arg) {
