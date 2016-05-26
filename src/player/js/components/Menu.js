@@ -21,29 +21,28 @@ var options = [
 
 var Menu = React.createClass({
 
-  _showM: function (menuElem) {
+  _show: function (menuElem) {
     var self = this;
-    menuElem.show().attr('rel', 'open');
+    menuElem.show().removeClass('_hide').addClass('_show');
     // Clicking outside the menu closes it
     $('.flex-container').on('click', function (event) {
       //event.stopPropagation();
-      self._hideM(menuElem);
+      menuElem.hide();
     });
   },
 
-  _hideM: function (menuElem) {
-    menuElem.hide().attr('rel', 'close');
+  _hide: function (menuElem) {
+    menuElem.hide().removeClass('_show').addClass('_hide');
     menuElem.off('click');
     $('.flex-container').off('click');
   },
 
   _onClick: function (event) {
     var menu = $($(event.currentTarget).siblings()[0]);
-    // Menu is hidden
-    if (menu.attr('rel') === 'open') {
-      this._hideM(menu);
+    if (menu.hasClass('_show')) {
+      this._hide(menu);
     } else {
-      this._showM(menu);
+      this._show(menu);
     }
   },
 
