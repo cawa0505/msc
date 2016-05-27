@@ -4,7 +4,7 @@ var MscActions    = require('../actions/MscActions');
 var EventEmitter  = require('events').EventEmitter;
 var assign        = require('object-assign');
 var SettingsStore = require('./SettingsStore');
-var ipc 					= require('electron').ipcMain;
+var ipc 					= require('ipc');
 
 var CHANGE_EVENT = 'change';
 
@@ -78,11 +78,11 @@ var MpdStore = assign({}, EventEmitter.prototype, {
       ipc.send('seek', percent * status.Duration);
     break;
     case Constants.MPD_REPEAT:
-     ipc.send('repeat', (status.Repeat ? '0' : '1'));
-     break;
+      ipc.send('repeat', (status.Repeat ? '0' : '1'));
+    break;
     case Constants.MPD_RANDOM:
-     ipc.send('random', (status.Random ? '0' : '1'));
-     break;
+      ipc.send('random', (status.Random ? '0' : '1'));
+    break;
   }
   }),
 });

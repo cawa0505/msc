@@ -36,7 +36,7 @@ app.on('ready', function () {
   mainWindow.loadURL('file://' + __dirname + '/player/index.html');
 
   // Open the devtools.
-  //mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -164,7 +164,7 @@ ipc.on('seek', function (event, arg) {
   client.sendCommand(['status'], function (err, res) {
     var resObj = parseMsg(res);
     var songId = resObj.songid;
-    client.sendCommand(cmd('seek ', [songId, parseInt(arg)]));
+    client.sendCommand(cmd('seek', [songId, parseInt(arg)]));
   });
 });
 

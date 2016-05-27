@@ -16,6 +16,7 @@ gulp.task('package', ['compile', 'install'], function() {
 				release: './release',
 				cache:   './cache',
 				version: 'v0.37.8',
+				token: '988abc123',
 				packaging: true,
 				platforms: ['darwin-x64', 'linux-x64']
 			}))
