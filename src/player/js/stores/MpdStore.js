@@ -4,7 +4,7 @@ var MscActions    = require('../actions/MscActions');
 var EventEmitter  = require('events').EventEmitter;
 var assign        = require('object-assign');
 var SettingsStore = require('./SettingsStore');
-var ipc 					= require('electron').ipcMain;
+var ipc = require('ipc');
 
 var CHANGE_EVENT = 'change';
 
