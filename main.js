@@ -164,7 +164,7 @@ ipc.on('seek', function (event, arg) {
   client.sendCommand(['status'], function (err, res) {
     var resObj = parseMsg(res);
     var songId = resObj.songid;
-    client.sendCommand(cmd('seek ', [songId, parseInt(arg)]));
+    client.sendCommand(cmd('seek', [songId, parseInt(arg)]));
   });
 });
 
