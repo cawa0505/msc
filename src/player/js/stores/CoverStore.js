@@ -1,4 +1,4 @@
-var covers        = require('album-cover')('a8515cff0a4856bbb5c5eae24fdc411b');
+var covers        = require('cover-art');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Constants     = require('../constants/Constants');
 var EventEmitter  = require('events').EventEmitter;
@@ -15,11 +15,7 @@ function fetchCoverArt(artist, album, fn) {
     return;
   }
 
-  covers.search({
-    artist: artist,
-    album:  album,
-    size:   'extralarge',
-  }, fn);
+  covers(artist, album, 'extralarge', fn);
 }
 
 var CoverStore = assign({}, EventEmitter.prototype, {
@@ -44,6 +40,7 @@ var CoverStore = assign({}, EventEmitter.prototype, {
     switch (payload.actionType) {
     case Constants.COVER_UPDATE:
       var mpdStatus = MpdStore.getStatus();
+      console.log(mpdStatus.Album, mpdStatus.Artist);
       fetchCoverArt(mpdStatus.Artist, mpdStatus.Album,
        function (err, res) {
         if (!err) {
