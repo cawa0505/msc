@@ -41,7 +41,7 @@ var MscApp = React.createClass({
     };
 
     return (
-     <div className="flex-container">
+      <div className="flex-container">
 				<Cover overlay={overlay} />
 				<ProgressBar progress={progress} />
 				<Controls state={state} />

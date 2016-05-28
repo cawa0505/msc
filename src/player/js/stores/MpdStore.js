@@ -4,7 +4,8 @@ var MscActions    = require('../actions/MscActions');
 var EventEmitter  = require('events').EventEmitter;
 var assign        = require('object-assign');
 var SettingsStore = require('./SettingsStore');
-var ipc           = require('ipc');
+// var ipc           = require('ipc');
+const { ipcRenderer } = require('electron');
 
 var CHANGE_EVENT = 'change';
 
@@ -20,15 +21,15 @@ var status = {
   Repeat:  0,
 };
 
-ipc.on('connection-success', function () {
+ipcRenderer.on('connection-success', function () {
   // TODO: turn off spinner
 });
 
-ipc.on('connection-fail', function () {
+ipcRenderer.on('connection-fail', function () {
   // TODO: turn on spinner
 });
 
-ipc.on('status-update', function (data) {
+ipcRenderer.on('status-update', (event, data) => {
   var oldAlbum = status.Album;
   status = data;
   MpdStore.emitChange();
@@ -39,7 +40,7 @@ ipc.on('status-update', function (data) {
 var MpdStore = assign({}, EventEmitter.prototype, {
 
   connect: function () {
-    ipc.send('connect');
+    ipcRenderer.send('connect');
   },
 
   getStatus: function () {
@@ -61,27 +62,27 @@ var MpdStore = assign({}, EventEmitter.prototype, {
   dispatcherIndex: AppDispatcher.register(function (payload) {
     switch (payload.actionType) {
     case Constants.MPD_CONNECT:
-      ipc.send('connect');
+      ipcRenderer.send('connect');
     break;
     case Constants.MPD_TOGGLE_PLAYBACK:
-      ipc.send('toggle-playback');
+      ipcRenderer.send('toggle-playback');
     break;
     case Constants.MPD_PREV:
-      ipc.send('prev-song');
+      ipcRenderer.send('prev-song');
     break;
     case Constants.MPD_NEXT:
-      ipc.send('next-song');
+      ipcRenderer.send('next-song');
     break;
     case Constants.MPD_SEEK:
       var percent = payload.data.percent;
       if (percent <= 0.015) percent = 0;
-      ipc.send('seek', percent * status.Duration);
+      ipcRenderer.send('seek', percent * status.Duration);
     break;
     case Constants.MPD_REPEAT:
-      ipc.send('repeat', (status.Repeat ? '0' : '1'));
+      ipcRenderer.send('repeat', (status.Repeat ? '0' : '1'));
     break;
     case Constants.MPD_RANDOM:
-      ipc.send('random', (status.Random ? '0' : '1'));
+      ipcRenderer.send('random', (status.Random ? '0' : '1'));
     break;
   }
   }),

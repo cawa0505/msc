@@ -4,7 +4,7 @@ var $     = require('jquery');
 var options = [
 // {
 //   title: 'Playlist',
-//   faIcon: 'fa-list',
+//   ionIcon: 'fa-list',
 //   onClick: function () {
 //     console.log('clicked playlist');
 //     window.location = '/playlist';
@@ -12,7 +12,7 @@ var options = [
 // },
 {
   title: 'Settings',
-  faIcon: 'fa-cog',
+  ionIcon: 'ion-gear-a',
   onClick: function () {
     $('.settings').addClass('active');
   },
@@ -49,7 +49,7 @@ var Menu = React.createClass({
   render: function () {
     var opts = [];
     for (var i = 0; i < options.length; ++i) {
-      var className = 'fa ' + options[i].faIcon;
+      var className = 'icon ' + options[i].ionIcon;
       opts.push(
         <li onClick={options[i].onClick.bind(this)} key={i}>
 					<i className={className}></i> {options[i].title}
@@ -62,7 +62,7 @@ var Menu = React.createClass({
 				<ul className="menu">
 					{opts}
 				</ul>
-				<i className="fa fa-bars"
+				<i className="icon ion-navicon-round"
          id="menu-btn"
          onClick={this._onClick}></i>
 			</div>

@@ -93,7 +93,7 @@ var Cover = React.createClass({
      <div className="cover" style={style}
           onClick={this._onClick}>
 				<div className="song-info" id="songInfo">
-					<div className="artist">{ data.Artist.toUpperCase() }</div>
+					<div className="artist">{ (data.Artist) ? data.Artist.toUpperCase() : '' }</div>
 					<div className="title">{ data.Title }</div>
 					<div className="playback-options">
 						{optElems}

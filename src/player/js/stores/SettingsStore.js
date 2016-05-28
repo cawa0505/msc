@@ -3,19 +3,20 @@ var Constants     = require('../constants/Constants');
 var MscActions    = require('../actions/MscActions');
 var EventEmitter  = require('events').EventEmitter;
 var assign        = require('object-assign');
-var ipc           = require('ipc');
+// var ipc           = require('ipc');
+const { ipcRenderer } = require('electron');
 
 var CHANGE_EVENT = 'change';
 var settings = {};
 var lastSave = {};
 
-ipc.on('save-settings', function (arg) {
+ipcRenderer.on('save-settings', function (arg) {
   if (arg !== 'error') lastSave = settings = arg;
   else console.log('Error in saving settings');
 });
 
 function init() {
-  settings = ipc.sendSync('get-settings');
+  settings = ipcRenderer.sendSync('get-settings');
 }
 
 var SettingsStore = assign({}, EventEmitter.prototype, {
@@ -43,7 +44,7 @@ var SettingsStore = assign({}, EventEmitter.prototype, {
   dispatcherIndex: AppDispatcher.register(function (payload) {
     switch (payload.actionType) {
     case Constants.SETTINGS_UPDATE:
-      ipc.send('save-settings', {
+      ipcRenderer.send('save-settings', {
         host: payload.data.host,
         port: payload.data.port,
       });
