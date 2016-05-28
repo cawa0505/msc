@@ -129,8 +129,7 @@ function updateStatus() {
       Random: parseInt(resObj.random),
     };
 
-    let webContents = mainWindow.webContents;
-    webContents.send('status-update', status);
+    mainWindow.webContents.send('status-update', status);
 
     if (status.State === 'play' && (!timeout || timeout._called)) {
       timeout = setTimeout(updateStatus, 500);

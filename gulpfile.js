@@ -9,17 +9,30 @@ var path     = require('path');
 var runElectron = require('gulp-run-electron');
 
 gulp.task('package', ['compile', 'install'], function () {
-  return gulp.src('')
-    .pipe(electron({
-     src: './dest',
-     packageJson: require('./dest/package.json'),
-     release: './release',
-     cache:   './cache',
-     version: 'v1.2.0',
-     packaging: true,
-     platforms: ['darwin-x64', 'linux-x64'],
+  // return gulp.src('')
+  //   .pipe(electron({
+  //    src: './dest',
+  //    packageJson: require('./dest/package.json'),
+  //    release: './release',
+  //    cache:   './cache',
+  //    version: 'v1.2.0',
+  //    packaging: true,
+  //    platforms: ['darwin-x64', 'linux-x64'],
+  //   }))
+  //   .pipe(gulp.dest(''));
+
+  gulp.src('')
+  .pipe(electron({
+      src: './dest',
+      packageJson: require('./dest/package.json'),
+      release: './release',
+      cache: './cache',
+      version: 'v1.2.0',
+      packaging: true,
+      token: 'abc123abc',
+      platforms: ['darwin-x64'],
     }))
-    .pipe(gulp.dest(''));
+  .pipe(gulp.dest(''));
 });
 
 gulp.task('run', ['compile', 'install'], function () {
@@ -46,8 +59,8 @@ gulp.task('jshint', function () {
 gulp.task('less', function () {
   return gulp.src('./src/{player,playlist}/style/style.less')
     .pipe(less({
-     paths: [path.join(__dirname, 'src', 'shared', 'less')],
-    }))
+    paths: [path.join(__dirname, 'src', 'shared', 'less')],
+  }))
     .pipe(gulp.dest('dest/'));
 });
 
@@ -59,18 +72,18 @@ gulp.task('scripts', ['jshint'], function () {
 });
 
 gulp.task('files', function () {
-	return gulp.src([
-		'./src/{player,playlist}/index.html',
-		'main.js',
-		'package.json'
-			])
-			.pipe(gulp.dest('dest'));
+  return gulp.src([
+   './src/{player,playlist}/index.html',
+   'main.js',
+   'package.json',
+    ])
+    .pipe(gulp.dest('dest'));
 });
 
 gulp.task('imgs', function () {
-	return gulp.src('./src/{player,playlist}/img/*.png', { base: './src/{player,playlist}' })
-			.pipe(gulp.dest('dest/img/'));
-})
+  return gulp.src('./src/{player,playlist}/img/*.png', { base: './src/{player,playlist}' })
+    .pipe(gulp.dest('dest/img/'));
+});
 
 gulp.task('compile', ['scripts', 'files', 'imgs', 'less']);
 
