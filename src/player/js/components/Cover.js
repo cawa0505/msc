@@ -62,7 +62,7 @@ var Cover = React.createClass({
     var options = [
      {
       ID:       1,
-      Class:    'fa fa-random',
+      Class:    'icon ion-shuffle',
       Selected: data.Random,
       Func: function (event) {
         MscActions.random();
@@ -71,7 +71,7 @@ var Cover = React.createClass({
     },
      {
       ID:       2,
-      Class:    'fa fa-repeat',
+      Class:    'icon ion-loop',
       Selected: data.Repeat,
       Func: function (event) {
         MscActions.repeat();
