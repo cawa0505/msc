@@ -27,7 +27,7 @@ gulp.task('package', ['compile', 'install'], function () {
       packageJson: require('./dest/package.json'),
       release: './release',
       cache: './cache',
-      version: 'v1.2.0',
+      version: 'v1.2.8',
       packaging: true,
       token: 'abc123abc',
       platforms: ['darwin-x64'],
