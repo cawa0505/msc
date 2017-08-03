@@ -31,7 +31,6 @@ app.on('ready', function () {
     width: 250,
     height: height,
     resizable: false,
-    // resizable: true,
     fullscreen: false,
     autoHideMenuBar: true,
   });

@@ -18,7 +18,7 @@ var status = {
   Elapsed: '',
   Duration: '',
   Random:  0,
-  Repeat:  0,
+  Repeat:  0
 };
 
 ipcRenderer.on('connection-success', function () {

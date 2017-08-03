@@ -7,6 +7,7 @@ var Constants = keyMirror({
   MPD_NEXT: null,
   MPD_SEEK: null,
   MPD_REPEAT: null,
+  MPD_SINGLE: null,
   MPD_RANDOM: null,
   COVER_UPDATE: null,
   SETTINGS_UPDATE: null,
